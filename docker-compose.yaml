@@ -1,0 +1,20 @@
+services:
+   bot:
+      restart: unless-stopped
+      env_file:
+         - ./app/.env
+      build:
+         context: .
+         dockerfile: .docker/Dockerfile.php
+      container_name: hackbot_bot
+      volumes:
+         - ./app:/home/app
+      environment:
+         - XDEBUG_MODE=off
+      command: php bin/console app:bot:polling
+
+networks:
+   internal:
+      driver: bridge
+      ipam:
+         driver: default
